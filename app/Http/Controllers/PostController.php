@@ -51,7 +51,12 @@ class PostController extends Controller
 
     public function status(Request $request, $id)
     {
-        Post::where('id', $id)->update(['status' => $request->status]);
+        $post = Post::find($id);
+        if ($request->status) {
+            $post->delete();
+        } else {
+            $post->restore();
+        }
     }
 
     public function delete($id)
