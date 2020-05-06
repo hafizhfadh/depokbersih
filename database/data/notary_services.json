@@ -1,0 +1,93 @@
+[
+	{
+		"parent" : "ppat",
+		"name" : "Girik",
+		"child" : "Akta Jual Beli (AJB)",
+		"form" : "notary_service.form.ppat.girik_ajb",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Girik",
+		"child" : "Hibah",
+		"form" : "notary_service.form.ppat.girik_hibah",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Girik",
+		"child" : "Hibah Tambah Saksi",
+		"form" : "notary_service.form.ppat.girik_hibah_tambah_saksi",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Sertifikat",
+		"child" : "Akta Jual Beli (AJB)",
+		"form" : "notary_service.form.ppat.sertifikat_ajb",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Sertifikat",
+		"child" : "Hibah",
+		"form" : "notary_service.form.ppat.sertifikat_hibah",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Sertifikat",
+		"child" : "Hibah Tambah Saksi",
+		"form" : "notary_service.form.ppat.sertifikat_hibah_tambah_saksi",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Surat Kuasa Membebankan Hak Tanggungan (SKMHT)",
+		"child" : null,
+		"form" : "notary_service.form.ppat.skmht",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Akta Pemberian Hak Tanggungan (APHT)",
+		"child" : "Tanpa Surat Kuasa Membebankan Hak Tanggungan (SKMHT)",
+		"form" : "notary_service.form.ppat.apht_tanpa_skmht",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Akta Pemberian Hak Tanggungan (APHT)",
+		"child" : "Dengan Surat Kuasa Membebankan Hak Tanggungan (SKMHT)",
+		"form" : "notary_service.form.ppat.apht_dengan_skmht",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	},
+	{
+		"parent" : "ppat",
+		"name" : "Akta Pemasukan ke Dalam Perusahaan (APDP)",
+		"child" : null,
+		"form" : "notary_service.form.ppat.apdp",
+		"created_at" : "2019-05-19 22:00:00",
+		"updated_at" : "2019-05-19 22:00:00",
+		"deleted_at" : null
+	}
+	
+]

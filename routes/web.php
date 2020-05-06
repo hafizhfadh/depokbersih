@@ -1,0 +1,78 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    if (auth()->user()) {
+        return redirect('dashboard');
+    } else {
+        return redirect('login');
+    }
+    // $a = ['key'=>123, 'value'=>'password'];
+    // $b = ['key'=>123, 'value'=>'password'];
+    // if ($a===$b) {
+    //     return "true";
+    // } else {
+    //     return "false";
+    // }
+});
+
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('dashboard', 'HomeController@index')->name('home');
+
+    Route::group(['prefix' => 'user', 'middleware' => 'group:administrator'], function() {
+        Route::get('', 'UserController@index');
+        Route::get('form/{type}/{id?}', 'UserController@form');
+        Route::post('store', 'UserController@store');
+        Route::post('update/{id}', 'UserController@update');
+        Route::post('change-password/{id}', 'UserController@changePassword');
+        Route::post('status/{id}', 'UserController@status');
+        Route::delete('delete/{id}', 'UserController@delete');
+
+        Route::group(['prefix' => 'group'], function() {
+            Route::post('list', 'UserController@groupList');
+        });
+    });
+
+    Route::group(['prefix' => 'posts', 'middleware' => 'group:administrator,supervisor,user,anthusias'], function() {
+        Route::get('', 'PostController@index');
+        Route::get('form/{type}/{id?}', 'PostController@form');
+        Route::post('store', 'PostController@store');
+        Route::post('update/{id}', 'PostController@update');
+        Route::post('status/{id}', 'PostController@status');
+        Route::delete('delete/{id}', 'PostController@delete');
+    });
+
+    Route::group(['prefix' => 'datatable'], function() {
+        Route::post('user', 'DatatableController@user');
+        Route::post('posts', 'DatatableController@posts');
+    });
+
+    Route::post('provinces', 'IndonesiaController@provinces')->name('provinces');
+    Route::post('regencies', 'IndonesiaController@regencies')->name('regencies');
+    Route::post('districts', 'IndonesiaController@districts')->name('districts');
+    Route::post('villages', 'IndonesiaController@villages')->name('villages');
+    Route::post('province', 'IndonesiaController@province')->name('province');
+    Route::post('regency', 'IndonesiaController@regency')->name('regency');
+    Route::post('district', 'IndonesiaController@district')->name('district');
+    Route::post('village', 'IndonesiaController@village')->name('village');
+
+    Route::post('jobs', 'HomeController@jobs')->name('jobs');
+    Route::post('birthplaces', 'HomeController@birthplaces')->name('birthplaces');
+    Route::post('birthplace/store', 'HomeController@storeBirthplace')->name('birthplace-store');
+});
