@@ -51,7 +51,7 @@ class PostController extends Controller
 
     public function status(Request $request, $id)
     {
-        $post = Post::find($id);
+        $post = Post::withTrashed()->find($id);
         if ($request->status) {
             $post->delete();
         } else {

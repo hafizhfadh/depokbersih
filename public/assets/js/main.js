@@ -1,81 +1,93 @@
 let base_url = $('meta[name="base_url"]').attr('content');
 let table, modal, opened_modal, form_action;
 
-$(document).on('show.bs.modal', '.modal', function() {
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+});
+
+$(document).on('show.bs.modal', '.modal', function () {
     modal = 1;
     opened_modal = '#' + $(this).attr('id');
     var animation = $(event.relatedTarget).data('animation');
     $(this).addClass(animation);
 });
 
-$(document).on('hidden.bs.modal', '.modal', function() {
+$(document).on('hidden.bs.modal', '.modal', function () {
     modal = 0;
     opened_modal = null;
-    $(this).removeClass (function (index, className) {
-        return (className.match (/(^|\s)effect-\S+/g) || []).join(' ');
+    $(this).removeClass(function (index, className) {
+        return (className.match(/(^|\s)effect-\S+/g) || []).join(' ');
     });
 });
 
-$(document).on('click', '.submit', function(e) {
+$(document).on('click', '.submit', function (e) {
     e.preventDefault();
     //clean rupiah format
     if ($('.balance').length > 0) {
-        $('.balance').each(function(i, v) {
+        $('.balance').each(function (i, v) {
             $(this).val(parseFloat($(this).val().split('.').join('')));
         });
     }
     let form = new FormData($(this).closest('#form')[0]);
     let action = $(this).closest('#form').attr('action');
     $.ajax({
-        url : action,
+        url: action,
         type: 'post',
         data: form,
         contentType: false,
         processData: false,
-        beforeSend: function() {
+        beforeSend: function () {
             Swal.showLoading();
             $('button').attr('disabled', true);
         },
-        success: function(x) {
+        success: function (x) {
             ajaxSuccess(x);
         },
-        error: function(x) {
+        error: function (x) {
             ajaxError(x);
         },
-        complete: function() {
+        complete: function () {
             $('button').attr('disabled', false);
         }
     });
 });
 
-$(document).on('click', '.refresh-button', function() {
+$(document).on('click', '.refresh-button', function () {
     table.ajax.reload();
 });
 
-$(document).on('click', '.delete-button', function() {
+$(document).on('click', '.delete-button', function () {
     let content = $(this).data('content');
     let id = $(this).val();
     Swal.fire({
         title: ' yakin untuk menghapus ?',
         text: 'Data yang sudah di hapus tidak dapat dikembalikan lagi',
-        icon : 'warning',
-        showCancelButton : true,
-    }).then(function(result) {
+        icon: 'warning',
+        showCancelButton: true,
+    }).then(function (result) {
         if (result.value) {
             $.ajax({
-                url: content +'/delete/'+ id,
+                url: content + '/delete/' + id,
                 type: 'delete',
-                beforeSend: function() {
+                beforeSend: function () {
                     Swal.showLoading();
                     $('button').attr('disabled', true);
                 },
-                success: function(x) {
+                success: function (x) {
                     ajaxSuccess(x);
                 },
-                error: function(x) {
+                error: function (x) {
                     ajaxError(x);
                 },
-                complete: function() {
+                complete: function () {
                     $('button').attr('disabled', false);
                 }
             });
@@ -83,7 +95,7 @@ $(document).on('click', '.delete-button', function() {
     });
 });
 
-$(document).on('click', '.status-button', function() {
+$(document).on('click', '.status-button', function () {
     let status;
     let content = $(this).data('content');
     let id = $(this).val();
@@ -94,47 +106,47 @@ $(document).on('click', '.status-button', function() {
         status = 1;
     }
     $.ajax({
-        url: content +'/status/'+ id,
+        url: content + '/status/' + id,
         type: 'post',
         data: {
-            status : status
+            status: status
         },
-        beforeSend: function() {
+        beforeSend: function () {
             Swal.showLoading();
             $('button').attr('disabled', true);
         },
-        success: function(x) {
+        success: function (x) {
             ajaxSuccess(x);
         },
-        error: function(x) {
+        error: function (x) {
             ajaxError(x);
         },
-        complete: function() {
+        complete: function () {
             $('button').attr('disabled', false);
         }
     });
 });
 
-$(document).on('click', '.remove-button', function(e) {
+$(document).on('click', '.remove-button', function (e) {
     e.preventDefault();
     $(this).closest('.removeable').remove();
 });
 
-function select2Generator(id , url , placeholder , parameters, returns) {
+function select2Generator(id, url, placeholder, parameters, returns) {
     let default_param = function (params) {
         return {
             q: $.trim(params.term)
         };
     }
     let default_return = function (data) {
-            return {
-                results: $.map(data.data, function(item) {
-                    return {
-                        text: item.name,
-                        id: item.id
-                    }
-                })
-            }
+        return {
+            results: $.map(data.data, function (item) {
+                return {
+                    text: item.name,
+                    id: item.id
+                }
+            })
+        }
     }
 
     if (parameters == null) {
@@ -144,7 +156,7 @@ function select2Generator(id , url , placeholder , parameters, returns) {
     if (returns == null) {
         returns = default_return;
     }
-    
+
     $(id).select2({
         width: '100%',
         placeholder: placeholder,
@@ -161,23 +173,22 @@ function select2Generator(id , url , placeholder , parameters, returns) {
 
 function select2plain(cls) {
     $(cls).select2({
-        width : '100%'
+        width: '100%'
     });
 }
 
 function dateGenerator(id, params) {
     $(id).datetimepicker(params);
-} 
+}
 
 
 function ajaxSuccess(x) {
     form_action = $('#form').data('form-action');
-    Swal.fire({
-        title: 'Sukses!',
-        text: 'Pekerjaan anda berhasil di simpan',
+    Toast.fire({
         icon: 'success',
+        title: 'Sukses! Pekerjaan anda berhasil di lakukan.',
         timer: 1500
-    }).then(function() {
+    }).then(function () {
         if (modal) {
             $(opened_modal).modal('toggle');
             $('#form').find('input').val('');
@@ -197,7 +208,7 @@ function ajaxError(x, e) {
     if (x) {
         if (x.responseJSON.message) {
             let errors = '';
-            $.each(x.responseJSON.errors, function(i, v) {
+            $.each(x.responseJSON.errors, function (i, v) {
                 errors += v + '<br>';
             });
             Swal.fire({
@@ -208,10 +219,10 @@ function ajaxError(x, e) {
             });
         }
     } else {
-        Swal.fire({
+        Toast.fire({
             icon: 'error',
-            title: 'Oops..',
-            text: 'Telah terjadi error, silahkan coba lagi'
+            title: 'Oops.. Telah terjadi error, silahkan coba lagi',
+            timer: 1500
         });
     }
 }
@@ -224,13 +235,14 @@ function inputRupiah(e) {
     inputOnlyNumber(e);
     e.target.value = formatRupiah(e.target.value);
 }
+
 const formatRupiah = (angka, prefix) => {
     var number_string = angka.replace(/[^,\d]/g, '').toString(),
-    split           = number_string.split(','),
-    sisa            = split[0].length % 3,
-    rupiah          = split[0].substr(0, sisa),
-    ribuan          = split[0].substr(sisa).match(/\d{3}/gi);
-    if(ribuan){
+        split = number_string.split(','),
+        sisa = split[0].length % 3,
+        rupiah = split[0].substr(0, sisa),
+        ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+    if (ribuan) {
         separator = sisa ? '.' : '';
         rupiah += separator + ribuan.join('.');
     }
@@ -238,7 +250,7 @@ const formatRupiah = (angka, prefix) => {
     return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
 }
 
-function number_format (number, decimals, dec_point, thousands_sep) {
+function number_format(number, decimals, dec_point, thousands_sep) {
     // Strip all characters but numerical ones.
     number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
     var n = !isFinite(+number) ? 0 : +number,
