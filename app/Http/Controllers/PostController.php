@@ -37,15 +37,13 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $this->validation('store', $request);
-        $request->request->add(['password' => bcrypt('password')]);
-        $post = Post::create($request->except('groups'));
-        $post->groups()->sync($request->groups);
+        $post = Post::create($request->all());
     }
 
     public function update(Request $request, $id)
     {
         $this->validation('update', $request, $id);
-        Post::where('id', $id)->update($request->except('groups'));
+        Post::where('id', $id)->update($request->all());
         Post::find($id)->groups()->sync($request->groups);
     }
 

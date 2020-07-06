@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class IndonesiaController extends Controller
 {
-    
+
     public function provinces(Request $request)
     {
         if ($request->q) {
-            $data = DB::table('provinces')->where('name', 'like', '%'.$request->q.'%')->get();
+            $data = DB::table('provinces')->where('name', 'like', '%' . $request->q . '%')->get();
         } else {
             $data = DB::table('provinces')->get();
         }
@@ -25,7 +25,7 @@ class IndonesiaController extends Controller
             $data = DB::table('provinces')->where('id', $request->province_id)->first();
             if ($data) {
                 if ($request->text == true) {
-                  $data = $data->name;
+                    $data = $data->name;
                 }
                 return response()->json(['data' => $data]);
             } else {
@@ -37,14 +37,14 @@ class IndonesiaController extends Controller
             } else {
                 $error = $th->getMessage();
             }
-            return response()->json(['error' => $error], $th->getCode() == 0? 500 : $th->getCode());
+            return response()->json(['error' => $error], $th->getCode() == 0 ? 500 : $th->getCode());
         }
     }
 
     public function regencies(Request $request)
     {
         if ($request->q) {
-            $data = DB::table('regencies')->where('province_id', $request->province_id)->where('name', 'like', '%'.$request->q.'%')->get();
+            $data = DB::table('regencies')->where('province_id', $request->province_id)->where('name', 'like', '%' . $request->q . '%')->get();
         } else {
             $data = DB::table('regencies')->where('province_id', $request->province_id)->get();
         }
@@ -57,7 +57,7 @@ class IndonesiaController extends Controller
             $data = DB::table('regencies')->where('id', $request->regency_id)->first();
             if ($data) {
                 if ($request->text == true) {
-                  $data = $data->name;
+                    $data = $data->name;
                 }
                 return response()->json(['data' => $data]);
             } else {
@@ -69,14 +69,14 @@ class IndonesiaController extends Controller
             } else {
                 $error = $th->getMessage();
             }
-            return response()->json(['error' => $error], $th->getCode() == 0? 500 : $th->getCode());
+            return response()->json(['error' => $error], $th->getCode() == 0 ? 500 : $th->getCode());
         }
     }
 
     public function districts(Request $request)
     {
         if ($request->q) {
-            $data = DB::table('districts')->where('regency_id', $request->regency_id)->where('name', 'like', '%'.$request->q.'%')->get();
+            $data = DB::table('districts')->where('regency_id', $request->regency_id)->where('name', 'like', '%' . $request->q . '%')->get();
         } else {
             $data = DB::table('districts')->where('regency_id', $request->regency_id)->get();
         }
@@ -89,7 +89,7 @@ class IndonesiaController extends Controller
             $data = DB::table('districts')->where('id', $request->district_id)->first();
             if ($data) {
                 if ($request->text == true) {
-                  $data = $data->name;
+                    $data = $data->name;
                 }
                 return response()->json(['data' => $data]);
             } else {
@@ -101,14 +101,14 @@ class IndonesiaController extends Controller
             } else {
                 $error = $th->getMessage();
             }
-            return response()->json(['error' => $error], $th->getCode() == 0? 500 : $th->getCode());
+            return response()->json(['error' => $error], $th->getCode() == 0 ? 500 : $th->getCode());
         }
     }
 
     public function villages(Request $request)
     {
         if ($request->q) {
-            $data = DB::table('villages')->where('district_id', $request->district_id)->where('name', 'like', '%'.$request->q.'%')->get();
+            $data = DB::table('villages')->where('district_id', $request->district_id)->where('name', 'like', '%' . $request->q . '%')->get();
         } else {
             $data = DB::table('villages')->where('district_id', $request->district_id)->get();
         }
@@ -121,7 +121,7 @@ class IndonesiaController extends Controller
             $data = DB::table('villages')->where('id', $request->village_id)->first();
             if ($data) {
                 if ($request->text == true) {
-                  $data = $data->name;
+                    $data = $data->name;
                 }
                 return response()->json(['data' => $data]);
             } else {
@@ -133,7 +133,7 @@ class IndonesiaController extends Controller
             } else {
                 $error = $th->getMessage();
             }
-            return response()->json(['error' => $error], $th->getCode() == 0? 500 : $th->getCode());
+            return response()->json(['error' => $error], $th->getCode() == 0 ? 500 : $th->getCode());
         }
     }
 }

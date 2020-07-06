@@ -33,13 +33,39 @@
                             <label for="">No. Handphone</label>
                             <input type="text" class="form-control" name="phone_number" value="{{ $data? $data->phone_number : '' }}" id="" oninput="inputOnlyNumber(event)">
                         </div>
-                        <div class="form-group col-12">
-                            <label for="">Alamat</label>
-                            <input type="text" class="form-control" name="address" value="{{ $data? $data->address : '' }}" id="">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Provinsi</label>
+                                <select class="form-control select2 province-all" id="select-province" name="province_id" data-province="#select-province" data-regency="#select-regency" data-district="#select-district" data-village="#select-village"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Kota/Kabupaten</label>
+                                <select class="form-control select2 regency-all" id="select-regency" name="regency_id" data-province="#select-province" data-regency="#select-regency" data-district="#select-district" data-village="#select-village"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Kecamatan</label>
+                                <select class="form-control select2 district-all" id="select-district" name="district_id" data-province="#select-province" data-regency="#select-regency" data-district="#select-district" data-village="#select-village"></select>
+                            </div>
                         </div>
-                        <div class="form-group col-12">
-                            <label for="">Token</label>
-                            <input type="text" class="form-control" value="{{ $data? $data->token : '' }}" id="">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="">Kelurahan</label>
+                                <select class="form-control select2 village-all" id="select-village" name="village_id" data-province="#select-province" data-regency="#select-regency" data-district="#select-district" data-village="#select-village"></select>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Alamat</label>
+                                <input type="text" class="form-control" name="address" value="{{ $data? $data->address : '' }}" id="">
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-6">
+                                    <label for="">RT</label>
+                                    <input type="text" class="form-control" name="rt" value="{{ $data? $data->rt : '' }}" id="">
+                                </div>
+                                <div class="form-group col-6">
+                                    <label for="">RW</label>
+                                    <input type="text" class="form-control" name="rw" value="{{ $data? $data->rw : '' }}" id="">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <button class="btn btn-primary btn-block submit">Simpan</button>
@@ -82,6 +108,17 @@
                 $.each(groups, function(index, value) {
                     $('#select-group').append(`<option value="${value.id}" selected>${value.name}</option>`);
                 });
+            @endif
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            @if($data)
+                let data = @json($data);
+                $('#select-province').append(`<option value="${data.province.id}" selected>${data.province.name}</option>`);
+                $('#select-regency').append(`<option value="${data.regency.id}" selected>${data.regency.name}</option>`);
+                $('#select-village').append(`<option value="${data.village.id}" selected>${data.village.name}</option>`);
+                $('#select-district').append(`<option value="${data.district.id}" selected>${data.district.name}</option>`);
             @endif
         });
     </script>

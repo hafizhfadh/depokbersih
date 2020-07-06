@@ -32,7 +32,7 @@ class UserController extends Controller
             $data = null;
             return view('user.form', compact('type', 'data'));
         } elseif ($type == 'edit') {
-            $data = User::with('groups')->where('id', $id)->first();
+            $data = User::with('province', 'regency', 'district', 'village', 'groups')->where('id', $id)->first();
             return view('user.form', compact('type', 'data', 'id'));
         } else {
             abort(404);
@@ -92,5 +92,17 @@ class UserController extends Controller
             $group = Group::get();
         }
         return response()->json(['data' => $group]);
+    }
+
+    public function userList(Request $request)
+    {
+        if ($request->q) {
+            $users = User::where('name', 'like', '%'.$request->q.'%')->get();
+        } elseif ($request->id) {
+            $users = User::where('id', $request->id)->first();
+        } else {
+            $users = User::get();
+        }
+        return response()->json(['data' => $users]);
     }
 }

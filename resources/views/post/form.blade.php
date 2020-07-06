@@ -19,7 +19,18 @@
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="">Title</label>
-                            <input type="text" class="form-control" name="title" value="{{ $data? $data->title : '' }}" id="">
+                            <input type="text" class="form-control" name="title" value="{{ $data? $data->title : '' }}"
+                                id="">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Thumbnail</label>
+                            <input type="file" class="form-control" name="thumbnail"
+                                value="{{ $data? $data->thumbnail : '' }}" id="">
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Description</label>
+                            <textarea type="text" class="form-control" name="description"
+                                id="editor">{{ $data? $data->description : '' }}</textarea>
                         </div>
                     </div>
                     <button class="btn btn-primary btn-block submit">Simpan</button>
@@ -31,15 +42,26 @@
 @endsection
 
 @push('js')
-    <script>
-        $(document).ready(function() {
-            select2Generator('#select-group', '{{ url('user/group/list') }}');
-            @if($data)
-                let groups = @json($data->groups);
-                $.each(groups, function(index, value) {
-                    $('#select-group').append(`<option value="${value.id}" selected>${value.name}</option>`);
-                });
-            @endif
+<script src="https://cdn.ckeditor.com/ckeditor5/20.0.0/classic/ckeditor.js"></script>
+<script>
+    $(document).ready(function () {
+        select2Generator('#select-group', '{{ url('user / group / list') }}');
+        @if ($data)
+            let groups = @json($data -> groups);
+        $.each(groups, function (index, value) {
+            $('#select-group').append(`<option value="${value.id}" selected>${value.name}</option>`);
         });
-    </script>
+        @endif
+    });
+</script>
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+</script>
 @endpush

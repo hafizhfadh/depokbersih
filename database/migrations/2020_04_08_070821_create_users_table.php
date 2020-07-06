@@ -22,6 +22,14 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->tinyInteger('status')->default(0);
             $table->string('token');
+            $table->foreignId('province_id')->nullable()->constrained();
+            $table->foreignId('regency_id')->nullable()->constrained();
+            $table->foreignId('district_id')->nullable()->constrained();
+            $table->foreignId('village_id')->nullable()->constrained();
+            $table->string('address')->nullable();
+            $table->string('rt')->nullable();
+            $table->string('rw')->nullable();
+            $table->string('point')->nullable();
             $table->string('qrcode')->nullable()->unique();
             $table->rememberToken();
             $table->softDeletes();

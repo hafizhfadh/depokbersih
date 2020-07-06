@@ -39,9 +39,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function province()
+    {
+        return $this->belongsTo('App\Province');
+    }
+
+    public function regency()
+    {
+        return $this->belongsTo('App\Regency');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo('App\District');
+    }
+
+    public function village()
+    {
+        return $this->belongsTo('App\Village');
+    }
+
     public function groups()
     {
       return $this->belongsToMany('App\Group', 'group_user', 'user_id', 'group_id')->withTimestamps();
+    }
+
+    public function oilCollector()
+    {
+      return $this->hasMany('App\OilCollector');
     }
 
     public function hasGroup($group)

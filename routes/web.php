@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('', 'UserController@index');
         Route::get('form/{type}/{id?}', 'UserController@form');
         Route::post('store', 'UserController@store');
+        Route::post('list', 'UserController@userList');
         Route::post('update/{id}', 'UserController@update');
         Route::post('change-password/{id}', 'UserController@changePassword');
         Route::post('status/{id}', 'UserController@status');
@@ -58,9 +59,19 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('delete/{id}', 'PostController@delete');
     });
 
+    Route::group(['prefix' => 'oil-collector', 'middleware' => 'group:administrator,supervisor,user,anthusias'], function() {
+        Route::get('', 'OilCollectorController@index');
+        Route::get('form/{type}/{id?}', 'OilCollectorController@form');
+        Route::post('store', 'OilCollectorController@store');
+        Route::post('update/{id}', 'OilCollectorController@update');
+        Route::post('status/{id}', 'OilCollectorController@status');
+        Route::delete('delete/{id}', 'OilCollectorController@delete');
+    });
+
     Route::group(['prefix' => 'datatable'], function() {
         Route::post('user', 'DatatableController@user');
         Route::post('posts', 'DatatableController@posts');
+        Route::post('oil-collector', 'DatatableController@oilCollector');
     });
 
     Route::post('provinces', 'IndonesiaController@provinces')->name('provinces');

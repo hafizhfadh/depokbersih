@@ -5,6 +5,7 @@ use Illuminate\Database\Seeder;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Ramsey\Uuid\Uuid;
 
 class UserSeeder extends Seeder
 {
@@ -16,10 +17,10 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::insert([
-            ['id' => 1, 'name' => 'Administrator', 'email' => 'administrator@depokbersih.org', 'phone_number' => '-', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Str::random(128), 'email_verified_at' => Carbon::now()],
-            ['id' => 2, 'name' => 'Supervisor', 'email' => 'supervisor@depokbersih.org', 'phone_number' => '-', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Str::random(128), 'email_verified_at' => Carbon::now()],
-            ['id' => 3, 'name' => 'User', 'email' => 'bambang@depokbersih.org', 'phone_number' => '-', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Str::random(128), 'email_verified_at' => Carbon::now()],
-            ['id' => 4, 'name' => 'Anthusias', 'email' => 'ferguso@depokbersih.org', 'phone_number' => '-', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Str::random(128), 'email_verified_at' => Carbon::now()],
+            ['id' => 1, 'name' => 'Administrator', 'email' => 'administrator@depokbersih.org', 'phone_number' => '080808080808', 'address' => 'Deket', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Uuid::uuid4(), 'email_verified_at' => Carbon::now()],
+            ['id' => 2, 'name' => 'Supervisor', 'email' => 'supervisor@depokbersih.org', 'phone_number' => '080808080808', 'address' => 'Deket', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Uuid::uuid4(), 'email_verified_at' => Carbon::now()],
+            ['id' => 3, 'name' => 'User', 'email' => 'bambang@depokbersih.org', 'phone_number' => '080808080808', 'address' => 'Deket', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Uuid::uuid4(), 'email_verified_at' => Carbon::now()],
+            ['id' => 4, 'name' => 'Anthusias', 'email' => 'ferguso@depokbersih.org', 'phone_number' => '080808080808', 'address' => 'Deket', 'password' => bcrypt('password'), 'status' => 1, 'token' => Str::random(64), 'qrcode' => Uuid::uuid4(), 'email_verified_at' => Carbon::now()],
         ]);
 
         User::find(1)->groups()->sync(1);

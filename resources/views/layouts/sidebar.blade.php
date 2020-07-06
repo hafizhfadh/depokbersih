@@ -48,6 +48,8 @@
                     <span>User</span></a></li>
             <li class="nav-item"><a href="{{ url('posts') }}" class="nav-link"><i data-feather="shopping-bag"></i>
                     <span>Post</span></a></li>
+            <li class="nav-item"><a href="{{ url('oil-collector') }}" class="nav-link"><i data-feather="shopping-bag"></i>
+                    <span>Oil Collector</span></a></li>
         </ul>
     </div>
 </aside>

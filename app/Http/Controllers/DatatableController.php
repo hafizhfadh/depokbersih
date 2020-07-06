@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\OilCollector;
 use App\Post;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -89,6 +90,22 @@ class DatatableController extends Controller
             } else {
                 $button .= '<button id="enable" value="'.$data->id.'" data-content="'.url('posts').'" class="btn btn-success status-button"><i class="fa fa-check"></i></button>';
             }
+            return $button.'</div>';
+
+        })
+        ->make(true);
+    }
+
+    public function oilCollector(DataTables $datatables)
+    {
+        $oil = OilCollector::with('user')->get();
+        return $datatables->of($oil)
+        ->addColumn('action', function($data) {
+            $button = '
+                <div class="btn-group" role="group">
+                    <a href="'.url('posts/form/edit/'.$data->id).'" class="btn btn-info edit-button"><i class="fa fa-edit"></i></a>
+                    <button value="'.$data->id.'" data-content="'.url('posts').'" class="btn btn-warning delete-button"><i class="fa fa-trash"></i></button>
+            ';
             return $button.'</div>';
 
         })
