@@ -107,7 +107,6 @@ class DatatableController extends Controller
                     <button value="'.$data->id.'" data-content="'.url('posts').'" class="btn btn-warning delete-button"><i class="fa fa-trash"></i></button>
             ';
             return $button.'</div>';
-
         })
         ->make(true);
     }
