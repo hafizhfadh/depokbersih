@@ -1,6 +1,6 @@
 <aside class="aside aside-fixed">
     <div class="aside-header">
-        <a href="{{ url('') }}" class="aside-logo">Notaris<span>App</span></a>
+        <a href="{{ url('') }}" class="aside-logo">Depok<span>Bersih</span></a>
         <a href="" class="aside-menu-link">
             <i data-feather="menu"></i>
             <i data-feather="x"></i>
