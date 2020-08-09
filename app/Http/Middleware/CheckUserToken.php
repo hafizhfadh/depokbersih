@@ -14,17 +14,13 @@ class CheckUserToken
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, ...$groups)
+    public function handle($request, Closure $next)
     {
         try {
             if ($request->header('user-token')) {
                 $user = User::where('token', $request->header('user-token'))->first();
                 if ($user) {
-                    if ($user->authorizeGroups($groups)) {
-                        return $next($request);
-                    } else {
-                        throw new \Exception('Unauthorized Action', 401);
-                    }
+                    return $next($request);
                 } else {
                     throw new \Exception('Token Missmatch', 401);
                 }
