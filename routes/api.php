@@ -18,8 +18,10 @@ Route::post('login', 'Api\AuthController@checkAuth');
 Route::post('check-token', 'Api\AuthController@checkToken');
 Route::post('login-qrcode', 'Api\AuthController@checkQrCode');
 
-Route::group(['middleware' => 'hasToken'], function() {
-    Route::group(['prefix' => 'posts'], function() {
-        Route::get('', 'Api\PostController@index');
+Route::group(['middleware' => 'hasToken'], function () {
+    Route::group(['middleware' => 'hasUser'], function () {
+        Route::group(['prefix' => 'posts'], function () {
+            Route::get('', 'Api\PostController@index');
+        });
     });
 });
