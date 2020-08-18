@@ -22,8 +22,23 @@
                             <select class="form-control select2" id="select-users" name="user_id" id=""></select>
                         </div>
                         <div class="form-group col-12">
-                            <label for="">Liter</label>
-                            <input type="number" class="form-control" name="liter" value="{{ $data? $data->liter : '' }}"
+                            <label for="">Unit</label>
+                            <select class="form-control" name="unit" id="">
+                                <option value="mililiter">Mililiter</option>
+                                <option value="liter">Liter</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Type</label>
+                            <select class="form-control" name="type" id="">
+                                <option value="cash">Cash</option>
+                                <option value="savings">Tabungan</option>
+                                <option value="alms">Sedekah</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-12">
+                            <label for="">Amount</label>
+                            <input type="number" class="form-control" name="amount" value="{{ $data? $data->amount : '' }}"
                                 id="">
                         </div>
                     </div>
@@ -40,11 +55,8 @@
     $(document).ready(function () {
         select2Generator('#select-users', '{{ url('user/list') }}');
         @if ($data)
-            let users = @json($data);
-            console.table(users);
-        $.each(users, function (index, value) {
-            $('#select-users').append(`<option value="${value.id}" selected>${value.name}</option>`);
-        });
+            let user = @json($data->user);
+            $('#select-users').append(`<option value="${user.id}" selected>${user.name}</option>`);
         @endif
     });
 </script>

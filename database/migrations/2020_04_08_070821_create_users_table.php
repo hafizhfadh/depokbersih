@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('rt')->nullable();
             $table->string('rw')->nullable();
-            $table->string('point')->nullable();
+            $table->string('point')->nullable()->default(0);
             $table->string('qrcode')->nullable()->unique();
             $table->rememberToken();
             $table->softDeletes();

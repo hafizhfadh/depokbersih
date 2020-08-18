@@ -16,7 +16,9 @@ class CreateOilCollectorsTable extends Migration
         Schema::create('oil_collectors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unsigned();
-            $table->string('liter');
+            $table->string('amount');
+            $table->string('unit');
+            $table->string('type');
             $table->timestamps();
         });
     }

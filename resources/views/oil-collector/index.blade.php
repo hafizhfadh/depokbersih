@@ -20,8 +20,9 @@
         <table id="datatable" class="table table-bordered" width="100%" cellspacing="0">
             <thead>
                 <th>User</th>
-                <th>Liter</th>
-                <th>Created At</th>
+                <th>Amount</th>
+                <th>Created</th>
+                <th>Last Update</th>
                 <th>Action</th>
             </thead>
         </table>
@@ -48,8 +49,9 @@
             ],
             columns: [
                 { data : 'user.name' },
-                { data : 'liter' },
+                { data : 'amount' },
                 { data : 'created_at' },
+                { data : 'updated_at' },
                 { data : 'action' }
             ]
         });

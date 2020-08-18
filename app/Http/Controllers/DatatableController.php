@@ -9,6 +9,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 
 use App\User;
+use Carbon\Carbon;
 
 class DatatableController extends Controller
 {
@@ -100,11 +101,20 @@ class DatatableController extends Controller
     {
         $oil = OilCollector::with('user')->get();
         return $datatables->of($oil)
+        ->editColumn('created_at', function($data) {
+            return Carbon::parse($data->created_at)->diffForHumans()." - ".Carbon::parse($data->created_at)->toFormattedDateString();
+        })
+        ->editColumn('updated_at', function($data) {
+            return Carbon::parse($data->updated_at)->diffForHumans()." - ".Carbon::parse($data->updated_at)->toFormattedDateString();
+        })
+        ->editColumn('amount', function($data) {
+            return $data->amount." ".ucfirst($data->unit);
+        })
         ->addColumn('action', function($data) {
             $button = '
                 <div class="btn-group" role="group">
-                    <a href="'.url('posts/form/edit/'.$data->id).'" class="btn btn-info edit-button"><i class="fa fa-edit"></i></a>
-                    <button value="'.$data->id.'" data-content="'.url('posts').'" class="btn btn-warning delete-button"><i class="fa fa-trash"></i></button>
+                    <a href="'.url('oil-collector/form/edit/'.$data->id).'" class="btn btn-info edit-button"><i class="fa fa-edit"></i></a>
+                    <button value="'.$data->id.'" data-content="'.url('oil-collector').'" class="btn btn-warning delete-button"><i class="fa fa-trash"></i></button>
             ';
             return $button.'</div>';
         })

@@ -198,7 +198,7 @@ function ajaxSuccess(x) {
             table.ajax.reload();
         }
         if (!table && !modal) {
-            window.location.replace(base_url);
+            // window.location.replace(base_url);
         }
     });
 
