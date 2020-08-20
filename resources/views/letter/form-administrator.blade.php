@@ -2,7 +2,7 @@
 
 @section('content')
 
-<meta name="base_url" content="{{ url('oil-collector') }}">
+<meta name="base_url" content="{{ url('letter') }}">
 
 <div class="row">
     <div class="col-sm">
