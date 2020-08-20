@@ -69,6 +69,11 @@ class User extends Authenticatable
       return $this->hasMany('App\OilCollector');
     }
 
+    public function letter()
+    {
+      return $this->hasMany('App\Letter');
+    }
+
     public function hasGroup($group)
     {
       if ($this->groups()->where('name', $group)->first()) {

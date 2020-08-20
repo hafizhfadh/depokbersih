@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Letter;
 use App\OilCollector;
 use App\Post;
 use Illuminate\Http\Request;
@@ -48,7 +49,6 @@ class DatatableController extends Controller
                 $button .= '<button id="enable" value="'.$data->id.'" data-content="'.url('user').'" class="btn btn-success status-button"><i class="fa fa-check"></i></button>';
             }
             return $button.'</div>';
-
         })
         ->rawColumns(['groups', 'status', 'action'])
         ->make(true);
@@ -94,6 +94,7 @@ class DatatableController extends Controller
             return $button.'</div>';
 
         })
+        ->rawColumns(['status', 'action'])
         ->make(true);
     }
 
@@ -118,6 +119,48 @@ class DatatableController extends Controller
             ';
             return $button.'</div>';
         })
+        ->rawColumns(['action'])
+        ->make(true);
+    }
+
+    public function letter(DataTables $datatables)
+    {
+        $oil = Letter::with('user')->get();
+        return $datatables->of($oil)
+        ->editColumn('status', function($data) {
+            switch ($data->status) {
+                case 'under-review':
+                    $status = '<span class="badge badge-warning">'.strtoupper($data->status).'</span>';
+                    break;
+                case 'not-approved':
+                    $status = '<span class="badge badge-danger">'.strtoupper($data->status).'</span>';
+                    break;
+                default:
+                    $status = '<span class="badge badge-success">'.strtoupper($data->status).'</span>';
+                    break;
+            }
+            return $status;
+        })
+        ->editColumn('created_at', function($data) {
+            return Carbon::parse($data->created_at)->diffForHumans()." - ".Carbon::parse($data->created_at)->toFormattedDateString();
+        })
+        ->editColumn('start_date', function($data) {
+            return $data->start_date != null ? Carbon::parse($data->start_date)->diffForHumans()." - ".Carbon::parse($data->start_date)->toFormattedDateString() : "-";
+        })
+        ->editColumn('expired_date', function($data) {
+            return $data->expired_date != null ? Carbon::parse($data->expired_date)->diffForHumans()." - ".Carbon::parse($data->expired_date)->toFormattedDateString() : "-";
+        })
+        ->addColumn('action', function($data) {
+            $button = '
+                <div class="btn-group" role="group">
+                    <button value="'.$data->id.'" data-content="'.url('letter').'" class="btn btn-warning delete-button"><i class="fa fa-trash"></i></button>
+            ';
+            if ($data->status == 'under-review') {
+                $button .= '<button id="disable" value="'.$data->id.'" data-content="'.url('letter').'" class="btn btn-success approve-button"><i class="fa fa-check"></i></button>';
+            }
+            return $button.'</div>';
+        })
+        ->rawColumns(['status', 'action'])
         ->make(true);
     }
 }

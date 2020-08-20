@@ -95,6 +95,63 @@ $(document).on('click', '.delete-button', function () {
     });
 });
 
+$(document).on('click', '.approve-button', function () {
+    let content = $(this).data('content');
+    let id = $(this).val();
+    Swal.fire({
+        title: 'Menyetujui untuk memberikan surat?',
+        text: 'Data tidak dapat di rubah, untuk membatalkan silahkan untuk menghapus data yang ada.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Approved!',
+        cancelButtonText: 'Not Approved!',
+    }).then(function (result) {
+        if (result.value) {
+            $.ajax({
+                url: content + '/status/' + id,
+                type: 'post',
+                data: {
+                    status: 'approved'
+                },
+                beforeSend: function () {
+                    Swal.showLoading();
+                    $('button').attr('disabled', true);
+                },
+                success: function (x) {
+                    ajaxSuccess(x);
+                },
+                error: function (x) {
+                    ajaxError(x);
+                },
+                complete: function () {
+                    $('button').attr('disabled', false);
+                }
+            });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            $.ajax({
+                url: content + '/status/' + id,
+                type: 'post',
+                data: {
+                    status: 'not-approved'
+                },
+                beforeSend: function () {
+                    Swal.showLoading();
+                    $('button').attr('disabled', true);
+                },
+                success: function (x) {
+                    ajaxSuccess(x);
+                },
+                error: function (x) {
+                    ajaxError(x);
+                },
+                complete: function () {
+                    $('button').attr('disabled', false);
+                }
+            });
+        }
+    });
+});
+
 $(document).on('click', '.status-button', function () {
     let status;
     let content = $(this).data('content');
@@ -178,7 +235,7 @@ function select2plain(cls) {
 }
 
 function dateGenerator(id, params) {
-    $(id).datetimepicker(params);
+    $(id).datepicker(params);
 }
 
 

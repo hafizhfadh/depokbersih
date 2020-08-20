@@ -25,6 +25,7 @@
     <link href="{{ asset('lib/select2/select2-bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/datatables.net-dt/css/jquery.dataTables.min.css')}}" rel="stylesheet">
     <link href="{{ asset('lib/datatables.net-responsive-dt/css/responsive.dataTables.min.css') }} " rel="stylesheet">
+    <link href="{{ asset('lib/ion-rangeslider/css/ion.rangeSlider.min.css') }}" rel="stylesheet">
 
     <!-- DashForge CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/dashforge.css') }}">
@@ -84,28 +85,31 @@
         </div>
     </div>
 
-    <div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="modal-logout" aria-hidden="true">
+    <div class="modal fade" id="logout-modal" tabindex="-1" role="dialog" aria-labelledby="modal-logout"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content tx-14">
-            <div class="modal-header">
-              <h6 class="modal-title" id="modal-logout">Ready to Leave?</h6>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <div class="modal-content tx-14">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="modal-logout">Ready to Leave?</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="mg-b-0">Select "Logout" below if you are ready to end your current session.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary tx-13" data-dismiss="modal">Cancel</button>
+                    <a href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                        class="btn btn-primary tx-13">Logout</a>
+                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
-            <div class="modal-body">
-              <p class="mg-b-0">Select "Logout" below if you are ready to end your current session.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary tx-13" data-dismiss="modal">Cancel</button>
-              <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-primary tx-13">Logout</a>
-            </div>
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-            </form>
-          </div>
         </div>
-      </div>
+    </div>
 
     <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -120,13 +124,13 @@
     <script src="{{ asset('lib/datatables.net-dt/js/dataTables.dataTables.min.js') }}"></script>
     <script src="{{ asset('lib/datatables.net-responsive/js/dataTables.responsive.min.js')}}"></script>
     <script src="{{ asset('lib/datatables.net-responsive-dt/js/responsive.dataTables.min.js')}}"></script>
+    <script src="{{ asset('lib/jqueryui/jquery-ui.min.js') }}"></script>
 
     <script src="{{ asset('assets/js/dashforge.js') }}"></script>
     <script src="{{ asset('assets/js/dashforge.aside.js') }}"></script>
 
     <!-- append theme customizer -->
     <script src="{{ asset('lib/js-cookie/js.cookie.js') }}"></script>
-    <script src="{{ asset('assets/js/dashforge.settings.js') }}"></script>
 
     {{-- core js --}}
     <script src="{{ asset('assets/js/main.js') }}"></script>
