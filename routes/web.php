@@ -19,13 +19,6 @@ Route::get('/', function () {
     } else {
         return redirect('login');
     }
-    // $a = ['key'=>123, 'value'=>'password'];
-    // $b = ['key'=>123, 'value'=>'password'];
-    // if ($a===$b) {
-    //     return "true";
-    // } else {
-    //     return "false";
-    // }
 });
 
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

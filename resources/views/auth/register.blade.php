@@ -96,8 +96,6 @@
         </div><!-- container -->
     </div><!-- content -->
 
-    @include('includes.footer')
-
     <script src="{{ asset('lib/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('lib/feather-icons/feather.min.js') }}"></script>

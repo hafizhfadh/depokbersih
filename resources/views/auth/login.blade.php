@@ -78,15 +78,8 @@
 
     <footer class="footer">
         <div>
-            <span>&copy; {{date('Y')}} Notaris v2.0.0. </span>
-            <span>Created by <a href="https://bernitek.com">Bernitek</a></span>
-        </div>
-        <div>
-            <nav class="nav">
-                <a href="https://themeforest.net/licenses/standard" class="nav-link">Licenses</a>
-                <a href="../../change-log.html" class="nav-link">Change Log</a>
-                <a href="https://discordapp.com/invite/RYqkVuw" class="nav-link">Get Help</a>
-            </nav>
+            <span>&copy; {{date('Y')}} Depok Bersih v1.0.0. </span>
+            <span>Created by <a href="https://hafizhfadh.github.io" target="_blank">Hafizh Fadhlurrohman</a></span>
         </div>
     </footer>
 
