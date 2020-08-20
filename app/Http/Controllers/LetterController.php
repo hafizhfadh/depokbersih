@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Letter;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -45,6 +46,13 @@ class LetterController extends Controller
         ];
 
         Letter::create($letter);
+    }
+
+    public function print($id)
+    {
+        $data = Letter::with('user')->where('signature', $id)->first();
+        $pdf = PDF::loadview('letter.print-letter',['data'=>$data]);
+        return $pdf->stream();
     }
 
     public function status(Request $request, $id)

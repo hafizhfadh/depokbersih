@@ -156,7 +156,9 @@ class DatatableController extends Controller
                     <button value="'.$data->id.'" data-content="'.url('letter').'" class="btn btn-warning delete-button"><i class="fa fa-trash"></i></button>
             ';
             if ($data->status == 'under-review') {
-                $button .= '<button id="disable" value="'.$data->id.'" data-content="'.url('letter').'" class="btn btn-success approve-button"><i class="fa fa-check"></i></button>';
+                $button .= '<button value="'.$data->id.'" data-content="'.url('letter').'" class="btn btn-success approve-button"><i class="fa fa-check"></i></button>';
+            } elseif ($data->status == 'approved') {
+                $button .= '<a href="/letter/print/'.$data->signature.'" target="_blank" data-content="'.url('letter').'" class="btn btn-success"><i class="fa fa-print"></i></a>';
             }
             return $button.'</div>';
         })

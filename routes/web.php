@@ -71,6 +71,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::group(['prefix' => 'letter', 'middleware' => 'group:administrator,supervisor,user'], function() {
         Route::get('', 'LetterController@index');
         Route::get('form/{type}/{id?}', 'LetterController@form');
+        Route::get('print/{id}', 'LetterController@print');
         Route::post('store', 'LetterController@store');
         Route::post('update/{id}', 'LetterController@update');
         Route::post('status/{id}', 'LetterController@status');
