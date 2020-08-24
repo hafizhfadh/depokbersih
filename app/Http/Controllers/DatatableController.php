@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Letter;
 use App\OilCollector;
-use App\Post;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
 
+use Auth;
 use App\User;
 use Carbon\Carbon;
 
@@ -161,6 +162,48 @@ class DatatableController extends Controller
                 $button .= '<a href="/letter/print/'.$data->signature.'" target="_blank" data-content="'.url('letter').'" class="btn btn-success"><i class="fa fa-print"></i></a>';
             }
             return $button.'</div>';
+        })
+        ->rawColumns(['status', 'action'])
+        ->make(true);
+    }
+
+    public function letterUser(DataTables $datatables)
+    {
+        $oil = Letter::with('user')->where('id', Auth::user()->id);
+        return $datatables->of($oil)
+        ->editColumn('status', function($data) {
+            switch ($data->status) {
+                case 'under-review':
+                    $status = '<span class="badge badge-warning">'.strtoupper($data->status).'</span>';
+                    break;
+                case 'not-approved':
+                    $status = '<span class="badge badge-danger">'.strtoupper($data->status).'</span>';
+                    break;
+                default:
+                    $status = '<span class="badge badge-success">'.strtoupper($data->status).'</span>';
+                    break;
+            }
+            return $status;
+        })
+        ->editColumn('created_at', function($data) {
+            return Carbon::parse($data->created_at)->diffForHumans()." - ".Carbon::parse($data->created_at)->toFormattedDateString();
+        })
+        ->editColumn('start_date', function($data) {
+            return $data->start_date != null ? Carbon::parse($data->start_date)->diffForHumans()." - ".Carbon::parse($data->start_date)->toFormattedDateString() : "-";
+        })
+        ->editColumn('expired_date', function($data) {
+            return $data->expired_date != null ? Carbon::parse($data->expired_date)->diffForHumans()." - ".Carbon::parse($data->expired_date)->toFormattedDateString() : "-";
+        })
+        ->addColumn('action', function($data) {
+            $button = null;
+            if (!Carbon::now()->greaterThan($data->expired_date)) {
+                if ($data->status == 'approved') {
+                    $button = '<a href="/letter/print/'.$data->signature.'" target="_blank" data-content="'.url('letter').'" class="btn btn-success"><i class="fa fa-print"></i></a>';
+                }
+            } else {
+                $button = '<span class="badge badge-danger">LETTER IS EXPIRED</span>';
+            }
+            return $button;
         })
         ->rawColumns(['status', 'action'])
         ->make(true);

@@ -10,4 +10,6 @@ use Wildside\Userstamps\Userstamps;
 class Post extends Model
 {
     use SoftDeletes, Userstamps;
+
+    protected $guarded = ['id'];
 }

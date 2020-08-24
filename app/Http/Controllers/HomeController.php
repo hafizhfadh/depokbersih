@@ -24,7 +24,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (auth()->user()->hasAnyGroup(['administrator','supervisor'])) {
+            return view('home');
+        } else if(auth()->user()->hasAnyGroup(['user','anthusias'])) {
+            return redirect('letter/form/user');
+        } else {
+            return redirect('login');
+        }
     }
 
     public function jobs(Request $request)

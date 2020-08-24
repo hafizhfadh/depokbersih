@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    if (auth()->user()) {
+    $user = new App\User();
+    if ($user->hasAnyGroup(['administrator','supervisor'])) {
         return redirect('dashboard');
+    } else if($user->hasAnyGroup(['user','anthusias'])) {
+        return redirect('letter/form/user');
     } else {
         return redirect('login');
     }
@@ -30,7 +33,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'user', 'middleware' => 'group:administrator'], function() {
         Route::get('', 'UserController@index');
-        Route::get('form/{type}/{id?}', 'UserController@form');
+        Route::get('form/{user?}', 'UserController@form');
         Route::post('store', 'UserController@store');
         Route::post('list', 'UserController@userList');
         Route::post('update/{id}', 'UserController@update');
@@ -52,7 +55,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::delete('delete/{id}', 'PostController@delete');
     });
 
-    Route::group(['prefix' => 'oil-collector', 'middleware' => 'group:administrator,supervisor,user'], function() {
+    Route::group(['prefix' => 'oil-collector', 'middleware' => 'group:administrator,supervisor'], function() {
         Route::get('', 'OilCollectorController@index');
         Route::get('form/{type}/{id?}', 'OilCollectorController@form');
         Route::post('store', 'OilCollectorController@store');
@@ -76,6 +79,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('posts', 'DatatableController@posts');
         Route::post('oil-collector', 'DatatableController@oilCollector');
         Route::post('letter', 'DatatableController@letter');
+        Route::post('letter/user', 'DatatableController@letterUser');
     });
 
     Route::post('provinces', 'IndonesiaController@provinces')->name('provinces');

@@ -27,10 +27,12 @@ class LetterController extends Controller
         }
     }
 
-    public function form($type)
+    public function form()
     {
-        if ($type == 'create') {
+        if (auth()->user()->hasGroup(['administrator','supervisor'])) {
             return view('letter.form-administrator');
+        } else if(auth()->user()->hasGroup(['user','anthusias'])) {
+            return view('letter.form-user');
         } else {
             abort(404);
         }
@@ -39,6 +41,7 @@ class LetterController extends Controller
     public function store(Request $request)
     {
         $this->validation('store', $request);
+        
         $letter = [
             'user_id' => $request->user_id,
             'signature' => Str::orderedUuid(),

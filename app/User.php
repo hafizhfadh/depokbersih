@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Wildside\Userstamps\Userstamps;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class User extends Authenticatable 
 // implements MustVerifyEmail
 {
-    use SoftDeletes, Notifiable;
+    use SoftDeletes, Notifiable, Userstamps;
 
     /**
      * The attributes that are mass assignable.

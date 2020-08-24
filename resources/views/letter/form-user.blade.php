@@ -10,7 +10,7 @@
             <!-- Card Header -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="mt-2 font-weight-bold text-primary">
-                    Form Pengajuan Surat Kebersihan
+                    Form Pengajuan Surat Kebersihan [{{ auth()->user()->name }}]
                 </h6>
             </div>
             <!-- Card Body -->
@@ -18,12 +18,9 @@
                 <form id="form" action=" {{ url('letter/store') }}">
                     <div class="row">
                         <div class="form-group col-12">
-                            <label for="">Applicant</label>
-                            <select class="form-control select2" id="select-users" name="user_id" id=""></select>
-                        </div>
-                        <div class="form-group col-12">
                             <label for="">Requested Letter for Date:</label>
                             <input type="text" id="startDate" class="form-control" name="start_date" placeholder="For Date">
+                            <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                         </div>
                     </div>
                     <button class="btn btn-primary btn-block submit">Simpan</button>
@@ -37,7 +34,6 @@
 @push('js')
 <script>
     $(document).ready(function () {
-        select2Generator('#select-users', '{{ url('user/list') }}');
         dateGenerator('#startDate',{
             minDate: new Date(Date.now()),
             maxDate: '+30Y',

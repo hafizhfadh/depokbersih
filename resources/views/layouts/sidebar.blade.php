@@ -40,20 +40,28 @@
             </div>
         </div><!-- aside-loggedin -->
         <ul class="nav nav-aside">
+            @if (auth()->user()->hasAnyGroup(['administrator','supervisor']))
             <li class="nav-label">Dashboard</li>
-            <li class="nav-item"><a href="{{ url('dashboard') }}" class="nav-link"><i data-feather="shopping-bag"></i>
+            <li class="nav-item"><a href="{{ url('dashboard') }}" class="nav-link"><i
+                        data-feather="shopping-bag"></i>
                     <span>Monitoring Pelaporan</span></a></li>
-            <li class="nav-label mg-t-25">Utama</li>
             <li class="nav-item"><a href="{{ url('user') }}" class="nav-link"><i data-feather="shopping-bag"></i>
                     <span>User</span></a></li>
+            @endif
+            <li class="nav-label {{ auth()->user()->hasAnyGroup(['administrator','supervisor']) ? 'mg-t-25' : '' }}">Utama</li>
+            @if (auth()->user()->hasAnyGroup(['administrator','supervisor']))
+            <li class="nav-item"><a href="{{ url('oil-collector') }}" class="nav-link"><i
+                data-feather="shopping-bag"></i>
+            <span>Oil Collector</span></a></li>
+            @endif
+            @if (auth()->user()->hasAnyGroup(['administrator','supervisor','user']))
+            <li class="nav-item"><a href="{{ url('letter') }}" class="nav-link"><i data-feather="shopping-bag"></i>
+                    <span>Letter</span></a></li>
+            @endif
+            @if (auth()->user()->hasAnyGroup(['administrator','supervisor','user','anthusias']))
             <li class="nav-item"><a href="{{ url('posts') }}" class="nav-link"><i data-feather="shopping-bag"></i>
                     <span>Post</span></a></li>
-            <li class="nav-item"><a href="{{ url('oil-collector') }}" class="nav-link"><i
-                        data-feather="shopping-bag"></i>
-                    <span>Oil Collector</span></a></li>
-            <li class="nav-item"><a href="{{ url('letter') }}" class="nav-link"><i
-                        data-feather="shopping-bag"></i>
-                    <span>Letter</span></a></li>
+            @endif
         </ul>
     </div>
 </aside>

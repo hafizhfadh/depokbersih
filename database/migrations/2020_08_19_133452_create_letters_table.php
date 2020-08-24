@@ -21,6 +21,11 @@ class CreateLettersTable extends Migration
             $table->timestamp('start_date')->nullable();
             $table->timestamp('expired_date')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
         });
     }
 

@@ -20,6 +20,11 @@ class CreateOilCollectorsTable extends Migration
             $table->string('unit');
             $table->string('type');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
+            $table->unsignedBigInteger('deleted_by')->nullable();
         });
     }
 
