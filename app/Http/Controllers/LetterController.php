@@ -53,9 +53,14 @@ class LetterController extends Controller
 
     public function print($id)
     {
-        $data = Letter::with('user')->where('signature', $id)->first();
-        $pdf = PDF::loadview('letter.print-letter',['data'=>$data]);
-        return $pdf->stream();
+        $data = Letter::where('signature', $id)->first();
+        if ($data == null) {
+            abort(404);
+        } else {
+            $data->with('user');
+            $pdf = PDF::loadview('letter.print-letter',['data'=>$data]);
+            return $pdf->stream();
+        }
     }
 
     public function status(Request $request, $id)
@@ -65,5 +70,20 @@ class LetterController extends Controller
             'start_date' => Carbon::parse($request->start_date),
             'expired_date' => Carbon::parse($request->start_date)->addDays(7),
         ]);
+    }
+
+    public function validationView()
+    {
+        return view('letter.validation');
+    }
+
+    public function letterValidation(Request $request)
+    {
+        return $request;
+    }
+
+    public function delete($id)
+    {
+        Letter::find($id)->delete();
     }
 }

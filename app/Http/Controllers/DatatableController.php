@@ -126,8 +126,8 @@ class DatatableController extends Controller
 
     public function letter(DataTables $datatables)
     {
-        $oil = Letter::with('user')->get();
-        return $datatables->of($oil)
+        $letter = Letter::with('user')->get();
+        return $datatables->of($letter)
         ->editColumn('status', function($data) {
             switch ($data->status) {
                 case 'under-review':
@@ -169,8 +169,8 @@ class DatatableController extends Controller
 
     public function letterUser(DataTables $datatables)
     {
-        $oil = Letter::with('user')->where('id', Auth::user()->id);
-        return $datatables->of($oil)
+        $letter = Letter::with('user')->where('user_id', Auth::user()->id)->get();
+        return $datatables->of($letter)
         ->editColumn('status', function($data) {
             switch ($data->status) {
                 case 'under-review':
@@ -203,7 +203,7 @@ class DatatableController extends Controller
             } else {
                 $button = '<span class="badge badge-danger">LETTER IS EXPIRED</span>';
             }
-            return $button;
+            return $data->start_date == null ? '<span class="badge badge-warning">'.strtoupper($data->status).'</span>' : $button;
         })
         ->rawColumns(['status', 'action'])
         ->make(true);

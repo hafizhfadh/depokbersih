@@ -11,6 +11,7 @@
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <h6 class="mt-2 font-weight-bold text-primary">List</h6>
         <div class="float-right">
+            <a href="{{ url('letter/validation') }}" class="btn btn-primary"><i class="fa fa-search"></i></a>
             <a href="{{ url('letter/form/create') }}" class="btn btn-primary"><i class="fa fa-plus"></i></a>
             <a href="#" class="btn btn-primary refresh-button"><i class="fa fa-sync"></i></a>
         </div>
