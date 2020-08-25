@@ -69,8 +69,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('form/{type}/{id?}', 'LetterController@form');
         Route::get('print/{id?}', 'LetterController@print');
         Route::get('validation', 'LetterController@validationView');
-        Route::post('store', 'LetterController@letterValidation');
-        Route::post('validation', 'LetterController@store');
+        Route::post('validation', 'LetterController@letterValidation');
+        Route::post('store', 'LetterController@store');
         Route::post('update/{id}', 'LetterController@update');
         Route::post('status/{id}', 'LetterController@status');
         Route::delete('delete/{id}', 'LetterController@delete');
