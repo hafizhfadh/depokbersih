@@ -30,6 +30,7 @@
     <!-- DashForge CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/dashforge.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/dashforge.dashboard.css') }}">
+    @stack('css')
 </head>
 
 <body>

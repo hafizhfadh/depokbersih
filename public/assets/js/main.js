@@ -279,7 +279,7 @@ function ajaxError(x, e) {
         Toast.fire({
             icon: 'error',
             title: 'Oops.. Telah terjadi error, silahkan coba lagi',
-            timer: 1500
+            timer: 1000
         });
     }
 }

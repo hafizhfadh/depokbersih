@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use App\Group;
@@ -41,9 +41,10 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $token = ['token' => Str::random(64)];
         $this->validation('store', $request);
         $request->request->add(['password' => bcrypt('password')]);
-        $user = User::create($request->except('groups'));
+        $user = User::create($request->except('groups') + $token);
         $user->groups()->sync($request->groups);
     }
 

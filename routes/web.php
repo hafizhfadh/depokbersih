@@ -30,14 +30,14 @@ Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
 Route::group(['middleware' => 'auth'], function() {
     Route::get('dashboard', 'HomeController@index')->name('home');
+    Route::post('user/change-password/{id}', 'UserController@changePassword');
 
     Route::group(['prefix' => 'user', 'middleware' => 'group:administrator'], function() {
         Route::get('', 'UserController@index');
-        Route::get('form/{user?}', 'UserController@form');
+        Route::get('form/{type?}/{id?}', 'UserController@form');
         Route::post('store', 'UserController@store');
         Route::post('list', 'UserController@userList');
         Route::post('update/{id}', 'UserController@update');
-        Route::post('change-password/{id}', 'UserController@changePassword');
         Route::post('status/{id}', 'UserController@status');
         Route::delete('delete/{id}', 'UserController@delete');
 
